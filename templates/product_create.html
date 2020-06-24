@@ -1,0 +1,59 @@
+<!-- Hereda de esta plantilla html_base.html-->
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+<!-- Earnings (Monthly) Card Example -->
+<!-- Creamos el formulario -->
+<form method="POST" class="form-inline">
+    {% csrf_token %}
+    <!-- <div class="col-xl-3 col-md-6 mb-4"> 
+    Amplio el tamaño: -->
+    <div class="col-xl-6 col-md-6 mb-6">
+        <!-- Para preguntar por el color. Si objeto que viene o hay datos-->
+        {% if obj %}
+            <!-- Le ponemos un color distinto, en este caso rojo -->
+            <div class="card border-left-warning shadow h-100 py-2">
+        {% else %}
+            <!-- Colocamos otro color en este caso "success" -->
+            <div class="card border-left-success shadow h-100 py-2">
+        {% endif %}
+            <div class="card-body">
+            <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <!-- Preguntamos lo mismo que antes. Si hay un valor: Editar-->
+                        {% if obj %}
+                             Editar 
+                        {% else %}                        
+                             Nueva 
+                        {% endif %}
+                        Categoría
+                    </div>
+                    
+                        <div></div>
+                             {{ form.as_p }}                                           
+                    </div>
+                    <div></div>
+                    <div class="row">
+                        <div class="col">
+                            <!-- Aqui estan lo botones, es decir un boton submit de color rojo -->
+                            <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
+                            <!-- Boton de cancelar, y con un vinculo para que si cancelamos se regresa a la lista de la categoria -->
+                            <a href="{% url 'product_create' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+<!-- Pegamos JS en esta parte. Lo sacamos de la documentacion de Jquery -->   
+{% block js_page %}
+
+{% endblock %}
+
+
+

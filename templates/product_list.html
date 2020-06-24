@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+<!-- Contenido -->
+<!-- <div class="col-xl-8 col-lg-8"> -->
+<div class="card shadow mb-4">
+    <h1 class="m-0 font-weight-bold text-primary">List of products</h1>        
+</div>
+    <div class="card-body">
+        <!-- Sino hay categorias he de dar un mensaje.
+        Preguntamos si está la variable Pontex con un If con el objeto: obj -->
+            {% if not obj %}          
+                <div class="alert alert-danger" role="alert">
+                  There is no products
+                </div>                  
+            {% else %}
+            <!-- Si hay registros, pintamos una tabla -->
+            <!-- <table class="table table-striped table-hover" id="datatable"> -->
+            <table class="table table-striped table-hover">
+                <thread>
+                    <!-- Los encabezados -->
+                    <th>Id</th>
+                    <th>Description</th>
+                    <th>Nutritional Values</th>
+                    <th>Estado</th>                                                                          
+                  </thread>
+                  <tbody>
+                      {% for item in obj %}                      
+                      <tr>
+                          <td>{{ item.id }}</td>
+                          <td>{{ item.description }}</td>                        
+                          <td>{{ item.nutritionalvalues }}</td>                        
+                          <td>{{ item.status|yesno:"Active,Inactive" }}</td>                                                                              
+                      </tr>                    
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                {% endif %}       
+         </div>
+</div>
+{% endblock %}
+
+
