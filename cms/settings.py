@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from decouple import config
-import dj_database_url
+#from decouple import config
+#import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = '=92#(ao^dau$+v5&d^capx#2f+k)woa5wjrv6g1b(i(h+0@kt#'
+SECRET_KEY = '=92#(ao^dau$+v5&d^capx#2f+k)woa5wjrv6g1b(i(h+0@kt#'
 
-SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
@@ -78,20 +78,20 @@ WSGI_APPLICATION = 'cms.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'USER': 'sqlite',
-    }
-
     #'default': {
-    #    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #    'NAME': 'products',
-    #    'USER': 'postgres',
-    #    'PASSWORD': '257_AcD8E',
-    #    'HOST': 'localhost',
-    #    'PORT': '5432'
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    #    'USER': 'sqlite',
     #}
+
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'products',
+        'USER': 'postgres',
+        'PASSWORD': '257_AcD8E',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
 
 }
 
@@ -140,6 +140,6 @@ LOGOUT_REDIRECT_URL = '/login/'
 #db_from_env = dj_database_url.config(conn_max_age=500)
 #DATABASES['default'].update(db_from_env)
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 
