@@ -1,0 +1,47 @@
+<!-- Hereda de esta plantilla home.html-->
+{% extends 'home/home.html' %}
+
+<!-- Visualizamos la pagina sin => Anulamos de la base-->
+
+{% block content %}
+<div>
+    <h1>List of Nutritional Values</h1>        
+</div>
+
+    <div>
+        <!-- Sino hay categorias he de dar un mensaje.
+        Preguntamos si está la variable Pontex con un If con el objeto: obj -->
+            {% if not obj %}          
+                <div>
+                  There is no Nutritional Values
+                </div>                  
+            {% else %}
+            <!-- Si hay registros, pintamos una tabla -->
+            <!-- <table class="table table-striped table-hover" id="datatable"> -->
+            <table border="2">
+                <thread>
+                    <!-- Los encabezados -->
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Unit</th>    
+                    <th>Actions</th>                  
+                  </thread>
+                  <tbody>
+                      {% for item in obj %}                      
+                      <tr>
+                          <td>{{ item.id }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.unit }}</td>         
+                          <td>                          
+                            <a href="{% url 'nutritional_update' item.id %}" role="button"><i >Update</i></a>
+                            <a href="{% url 'nutritional_delete' item.id %}" role="button"><i >Delete</i></a>                            
+                          </td>                               
+                      </tr>                    
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                {% endif %}       
+         </div>
+{% endblock %}
+
+

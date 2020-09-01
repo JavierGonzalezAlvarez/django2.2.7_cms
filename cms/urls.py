@@ -16,15 +16,31 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth import views as auth_views  
 from django.urls import path
-from products.views import class_Products_ListView, class_Products_Create_Form, Class_Home
-    
+from products.views import Class_Products_ListView, Class_Products_Create_Form, \
+    Class_Home, Class_Works, \
+    Class_Nutritional_Create_Form, Class_Nutritional_ListView, \
+    Class_Product_Update_Form, Class_Product_Delete_Form, \
+    Class_Nutritional_Update_Form, Class_Nutritional_Delete_Form, \
+    Product_List_Filter_1   
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path ('products/list/', class_Products_ListView.as_view(), name = 'product_list'),
-    path ('products/create/', class_Products_Create_Form.as_view(), name = 'product_create'),
-    path('', Class_Home.as_view(), name='home'),   
+    #path('admin/', admin.site.urls),    
+    path('', Class_Home.as_view(), name='home'),  
+    path('works/', Class_Works.as_view(), name='works'),  
+    #login/logout
     path('login/',auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/',auth_views.LogoutView.as_view(template_name='login.html'), name='logout'),
+    path('logout/',auth_views.LogoutView.as_view(template_name='login.html'), name='logout'),    
+    #product list without filter
+    #path('products/list/', Class_Products_ListView.as_view(), name = 'product_list'),
+    #product list with filter
+    path('products/list/', Product_List_Filter_1.as_view(), name = 'product_list'),
     
+    path('products/create/', Class_Products_Create_Form.as_view(), name = 'product_create'),
+    path('products/update/<int:pk>', Class_Product_Update_Form.as_view(), name = 'product_update'),    
+    path('products/delete/<int:pk>', Class_Product_Delete_Form.as_view(), name = 'product_delete'),    
+    #nutritional
+    path('nutritional/list/', Class_Nutritional_ListView.as_view(), name = 'nutritional_list'),
+    path('nutritional/create/', Class_Nutritional_Create_Form.as_view(), name = 'nutritional_create'),    
+    path('nutritional/update/<int:pk>', Class_Nutritional_Update_Form.as_view(), name = 'nutritional_update'),    
+    path('nutritional/delete/<int:pk>', Class_Nutritional_Delete_Form.as_view(), name = 'nutritional_delete'),            
 ]

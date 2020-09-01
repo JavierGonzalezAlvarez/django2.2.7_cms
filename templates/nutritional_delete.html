@@ -1,0 +1,20 @@
+<!-- Hereda de esta plantilla home.html-->
+{% extends 'home/home.html' %}
+<!-- Visualizamos la pagina sin => Anulamos de la base-->
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}       
+              <div> 
+               <h2>Delete a record</h2>                
+               <hr>
+                  <br>
+                  <div>¿Would you like to delete the record => {{obj.name}}?</div>
+                  <br>
+                  <button type="submit">Yes</button> - <a href="{% url 'nutritional_list' %}">No (Back)</a>                
+              </div>                    
+</form>
+{% endblock %}
+
+
+

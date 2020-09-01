@@ -1,0 +1,19 @@
+<!-- Hereda de esta plantilla home.html-->
+{% extends 'home/home.html' %}
+<!-- Visualizamos la pagina sin => Anulamos de la base-->
+
+{% block content %}
+<form method="POST">
+   {% csrf_token %}                     
+   <h2>Update Products with a Form - {{ obj.name }}</h2>  
+    <br>                                      
+     <div>
+           {{ form.as_p }}           
+     </div>
+        <button type="submit" class="form-control">Update</button>
+        <a href="{% url 'product_list' %}">Back</a>                                     
+</form>
+{% endblock %}
+
+
+

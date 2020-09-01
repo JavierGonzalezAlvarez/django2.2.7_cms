@@ -11,12 +11,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from decouple import config
-import dj_database_url
+#from decouple import config
+#import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -29,7 +28,8 @@ SECRET_KEY = '=92#(ao^dau$+v5&d^capx#2f+k)woa5wjrv6g1b(i(h+0@kt#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #DEBUG = False
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
+#ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'products',
+    'products',    
 ]
 
 MIDDLEWARE = [
@@ -73,7 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cms.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -84,17 +83,15 @@ DATABASES = {
     #    'USER': 'sqlite',
     #}
 
-    'default': {
+    'default': {        
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'products',
-        'USER': 'postgres',
-        'PASSWORD': '257_AcD8E',
+        'USER': 'javier',
+        'PASSWORD': '2525_ap',
         'HOST': 'localhost',
         'PORT': '5432'
     }
-
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -114,20 +111,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -140,6 +131,6 @@ LOGOUT_REDIRECT_URL = '/login/'
 #db_from_env = dj_database_url.config(conn_max_age=500)
 #DATABASES['default'].update(db_from_env)
 
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 

@@ -1,0 +1,76 @@
+<!-- Hereda de esta plantilla home.html-->
+{% extends 'home/home.html' %}
+
+<!-- Visualizamos la pagina sin => Anulamos de la base-->
+
+{% block content %}
+<div>
+    <h1>List of products</h1>        
+</div>
+
+<form action="{% url 'product_list' %}" method="GET">
+<!-- <form method="GET"> -->   
+  <select name="name" id="name">    
+    <option value="0">Select a Product</option>
+    {% for y in obj %}
+        <option value="{{ y.name }}">{{ y.id }} - {{ y.name }}</option>
+    {% endfor %}               
+  </select>
+  <!-- <input type="submit" name="{{ item.name }}" value="Filter"/>   -->
+  <button type="submit" value="{{ y.name }}" id="btnSelect" method="GET">Filter</button>
+</form>
+
+<br>
+
+<section>
+    <div>
+        <!-- Sino hay registros he de dar un mensaje.
+        Preguntamos si está la variable con un If con el objeto: obj -->
+      {% if not obj %}          
+          <div>
+              There is no products
+          </div>                  
+      {% else %}
+            <!-- Si hay registros, pintamos una tabla -->                    
+            <table border="2">
+                <thread>
+                    <!-- Los encabezados -->
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Nutritional Values</th>
+                    <th>Status</th>
+                    <th>Actions</th>                                                                           
+                  </thread>
+                  <tbody>
+                      {% for item in obj %}                      
+                      <tr>
+                          <td>{{ item.id }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.description }}</td>                        
+                          <td>
+                            {% for i in item.nutritional_values.all %}
+                              <ul>{{ i.name }} - {{ i.unit }}</ul>
+                            {% endfor %}
+                          </td>       
+                          <td>{{ item.status|yesno:"Active,Inactive" }}</td>     
+                          
+                          <td>                          
+                            <a href="{% url 'product_update' item.id %}" role="button"><i >Update</i></a>
+                            <a href="{% url 'product_delete' item.id %}" role="button"><i >Delete</i></a>                            
+                          </td>     
+
+                      </tr>                    
+                      {% endfor %}
+                    </tbody>
+                  </table>                
+          {% endif %}       
+
+         </div>
+</section>    
+
+
+
+{% endblock %}
+
+

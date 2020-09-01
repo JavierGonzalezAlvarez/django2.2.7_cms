@@ -1,0 +1,39 @@
+<!-- Hereda de esta plantilla home.html-->
+{% extends 'home/home.html' %}
+<!-- Visualizamos la pagina sin => Anulamos de la base-->
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}    
+    <div>          
+       <h2>Update Manually  Nutritional Values - {{ obj.name }}</h2>  
+       <br>                                      
+        <div>
+            <div>
+               <label>Id</label>
+               <input type="text" name="id" class="form-control" maxlength="50" required id="id_id" placeholder="id"                                                                    
+                   value="{% if obj %} {{ obj.id }} {% endif %}">   
+               
+               <label>Name</label>
+               <input type="text" name="name" class="form-control" maxlength="200" required id="id_name" placeholder="name"                                                                    
+                   value="{% if obj %} {{ obj.name }} {% endif %}">   
+               
+               <label>Unit</label>       
+               <input type="text" name="unit" class="form-control" maxlength="100" required id="id_unit" placeholder="unit"                                                                    
+                    value="{% if obj %} {{ obj.unit }} {% endif %}">                                
+                            
+            </div>
+        <div>
+
+        <div>                            
+            <button type="submit">Update</button>                            
+            <a href="{% url 'nutritional_list' %}">Back</a>
+        </div>
+    </div>                                                                   
+</form>
+
+
+{% endblock %}
+
+
+

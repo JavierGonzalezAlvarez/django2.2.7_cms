@@ -2,60 +2,132 @@ from django.views import generic
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.http import HttpResponse
 from .models import Product, NutritionalValues
-from .forms import class_Product_Form
+from .forms import Class_Product_Form, Class_NutritionalValues_Form
+
+from .filters import Product_List_Filter
+from django_filters.views import FilterView
+
 
 class Class_Home(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'home/home.html'
+    #template_name = 'home/home.html'
+    template_name = 'home/index.html'
     login_url = 'login'
     
-class class_Products_ListView(LoginRequiredMixin, generic.ListView):
-    #Esta vista debe tener unas catecteristicas a cumplir
-    #Asignamos el modelo
+class Class_Works(LoginRequiredMixin, generic.TemplateView):    
+    template_name = 'works.html'
+    login_url = 'login'
+
+class Class_Products_ListView(LoginRequiredMixin, generic.ListView):    
     model = Product
-    template_name = "product_list.html"
-    #Importante, el contexto es la variable que le va a pasar a la vista con
-    # la informacion que va a renderizar a la plantilla. A la plantilla le dijimos
-    # que se va a llamar obj, por defecto Djagno le llama object, pero nosotros cambiamos 
-    # el nombre con context_object_name
-    context_object_name = "obj"
-    #Si no estamos logeados, que nos pida logearnos
-    #Si no estasmos redireccionados nos vamos a bases:html_login
+    template_name = "product_list.html"     
+    #queryset = Product.objects.order_by('name')
+    context_object_name = "obj"        
+    login_url = "login"
+    #name=""
+
+    #class Meta:
+    #    model = Product
+    #    fields = ['name', 'description']
+
+#def filter_product(request):
+        #if request.GET.get('name'):
+        #filter_name = request.GET.get('name')
+        #name = Product.objects.filter(name=filter_name)          
+        #return render(request, "product_list.html", {'filter': name})
+
+#def filter_product(request):
+#    filter_name = Product.objects.all()
+#    name = FilterSet(request.GET, queryset=filter_name)        
+#    return render(request, "product_list.html", {'filter': name})
+    
+#def get_queryset(self):
+#    queryset = super(Class_Products_ListView, self).get_queryset()    
+#    filter1 = self.request.GET.get('name')                
+#    if filter1 == 'CALORIES':
+#        queryset = queryset.filter(name=str(filter1))                
+#        #queryset = Product.objects.queryset.filter(name=str(filter1))    
+#        #return Product.objects.filter(name=str(filter1))               
+#    return queryset()
+
+#def search(request):
+#    product_list = Product.objects.all()
+#    product_filter = Product_List_Filter(request.GET, queryset=product_list)
+#    return render(request, 'product_list.html', {'filter': product_filter})
+
+class Product_List_Filter_1(LoginRequiredMixin, FilterView):
+    model = Product
+    template_name = "product_list.html"  
+    context_object_name = 'obj'
+    filter_class = Product_List_Filter
     login_url = "login"
 
-class class_Products_Create_Form(LoginRequiredMixin, generic.CreateView):
-    #Esta vista debe tener unas caracteristicas a cumplir
-    #Asignamos el modelo
+
+    #def get_queryset(request):        
+    #    name = Product.objects.order_by('name')[:5]
+    #    return render(request, 'product_list.html', {'name': name})
+        
+class Class_Products_Create_Form(LoginRequiredMixin, generic.CreateView):    
     model = Product
     template_name = "product_create.html"
-    # Importante, el contexto es la variable que le va a pasar a la vista con
-    # la informacion que va a renderizar a la plantilla. A la plantilla le dijimos
-    # que se va a llamar obj, por defecto Dajgno le llama object, pero nosotros cambiamos 
-    # el nombre con context_object_name
     context_object_name = "obj"
-    #Preguntamos que formulario va a renderizar
-    form_class = class_Product_Form
-    #Al dar submit que vaya a una URL. Al createView exige que se le diga
-    #  a donde tiene que ir al hacer click
-    #Es la ruta a donde va una vez que se crea el registro. El createView exige que se redireccione
-    success_url = reverse_lazy("product_list")  
-    #Si no estamos logeados, que nos pida logearnos y nos vamos a bases:html_login
-    login_url = "login"
-    
-    #Cuando creamos el modelo habia una propiedad "crear usuario" con una foreingkey (id), no podiamos crear dos id
-    #Vamos a sbreescribir la propiedad, el metodo form_valid de etsa vista para poder tener
-    #  acceso a la informacion que se esta procesando o lo que se envia desde le formulario
-    #  de ahí podemos coger datos de usuario que lo está procesando y manajar los datos del usuario
-    def form_valid(self, form):
-        #Accedemos al formulario desde este metodo                
-        #Lo guarda en el formulario. Cogemos el campo "um", que es el usuario que modifica el registro
-        #Coloco el user.id porque no lo puedo referencia con el foreignkey (este era para el uc), 
-        #  En este caso um es un intgeger => um = models.IntegerField(null=True, blank=True)
-        
-        #form.instance.um = self.request.user.id
-        
-        #Debemos retornar si el formulario es valido. Lo ahremos sobre el Padre con super()
-        #Le mandamos el formulario que hemos modificado
+    form_class = Class_Product_Form    
+    success_url = reverse_lazy("product_create")      
+    login_url = "login"    
+    def form_valid(self, form):       
         return super().form_valid(form)
+
+class Class_Product_Update_Form(LoginRequiredMixin, generic.UpdateView):
+    model = Product
+    template_name = "product_update.html"
+    context_object_name = "obj"
+    form_class = Class_Product_Form
+    success_url = reverse_lazy("product_list")  
+    login_url = "login"
+    def form_valid(self, form):        
+        return super().form_valid(form)
+
+class Class_Product_Delete_Form(LoginRequiredMixin, generic.DeleteView):    
+    model = Product
+    template_name = "product_delete.html"    
+    context_object_name = "obj"
+    success_url = reverse_lazy("product_list")  
+    login_url = "login"
+
+
+class Class_Nutritional_Create_Form(LoginRequiredMixin, generic.CreateView):  
+    model = NutritionalValues
+    template_name = "nutritional_create.html"    
+    context_object_name = "obj"
+    form_class = Class_NutritionalValues_Form   
+    success_url = reverse_lazy("nutritional_create")  
+    login_url = "login"       
+    def form_valid(self, form):        
+        return super().form_valid(form)
+
+class Class_Nutritional_ListView(LoginRequiredMixin, generic.ListView):   
+    model = NutritionalValues
+    template_name = "nutritional_list.html"   
+    context_object_name = "obj"   
+    login_url = "login"
+
+
+class Class_Nutritional_Update_Form(LoginRequiredMixin, generic.UpdateView):
+    model = NutritionalValues
+    template_name = "nutritional_update.html"
+    context_object_name = "obj"
+    form_class = Class_NutritionalValues_Form
+    success_url = reverse_lazy("nutritional_list")  
+    login_url = "login"    
+    def form_valid(self, form):        
+        return super().form_valid(form)
+
+class Class_Nutritional_Delete_Form(LoginRequiredMixin, generic.DeleteView):    
+    model = NutritionalValues
+    template_name = "nutritional_delete.html"    
+    context_object_name = "obj"
+    success_url = reverse_lazy("nutritional_list")  
+    login_url = "login"    
 
 

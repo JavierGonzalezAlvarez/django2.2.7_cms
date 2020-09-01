@@ -1,0 +1,25 @@
+<!-- Hereda de esta plantilla home.html-->
+{% extends 'home/home.html' %}
+
+<!-- Visualizamos la pagina sin => Anulamos de la base-->
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <h3>Add new Nutritional Value</h3>
+    <br>
+       {{ form.as_p }}                                           
+        <div>
+            <div>
+                <!-- Aqui estan lo botones, es decir un boton submit de color rojo -->
+                <button type="submit">Save</button>
+                <!-- Boton de cancelar, y con un vinculo para que si cancelamos se regresa a la lista de la categoria -->                                
+                <a href="{% url 'nutritional_list' %}">Back</a>
+             </div>
+        </div>   
+</form>
+{% endblock %}
+
+
+
+
